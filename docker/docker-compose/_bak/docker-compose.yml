@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - web
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd
+  wordpress:
+    image: wordpress
+    ports:
+      - 8888:80
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - web
+    environment:
+      WORDPRESS_DB_PASSWORD: P@ssw0rd
+
+volumes:
+  mysql:
+  wordpress:
+
+networks:
+  web:
