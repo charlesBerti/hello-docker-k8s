@@ -1,8 +1,8 @@
 # Docker Compose
 Manage several containers at the same time. By default, there is a `docker-compose.yml` file. 
 
-## Build Images
+## Build Image
 - `docker-compose build`
 
-## Build and Run
+## Run Image
 - `docker-compose up`

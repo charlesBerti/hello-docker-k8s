@@ -2,28 +2,28 @@
 
 ## Docker
 ### Installation
-- [Docker Install](docker/install/docker-install.md)
+- [Docker Install](docker/install/README.md)
 
 ### Container
-- [Docker Container](docker/container/docker-container.md)
+- [Docker Container](docker/container/README.md)
 
 ### Image
-- [Docker Image](docker/image/docker-image.md)
+- [Docker Image](docker/image/README.md)
 
 ### Volume
-- [Docker Volume](docker/volume/docker-volume.md)
+- [Docker Volume](docker/volume/README.md)
 
 ### Network
-- [Docker Network](docker/network/docker-network.md)
+- [Docker Network](docker/network/README.md)
 
-### Wordpress Deployment
-- [Docker Wordpress Deployment](docker/wordpress-deployment/docker-wordpress-deployment.md)
+### TP: WordPress Deployment
+- [Docker WordPress Deployment](docker/docker-wordpress-deployment.md)
 
 ### Dockerfile
-- [Docker Dockerfile](docker/dockerfile/docker-dockerfile.md)
+- [Docker Dockerfile](docker/dockerfile/README.md)
 
 ### Compose
-- [Docker Compose](docker/compose/docker-compose.md)
+- [Docker Compose](docker/compose/README.md)
 
 ## Kubernetes
 

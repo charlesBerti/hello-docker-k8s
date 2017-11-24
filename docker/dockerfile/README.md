@@ -1,4 +1,5 @@
 # Dockerfile
+
 ## Terminology
 - `FROM`: use which base image
 - `LABEL`: replace the previous MAINTAINER
@@ -21,8 +22,16 @@
 - `HEALTHCHECK`: 
 - `SHELL`: use which shell to execute commands
 
+## Build Image
+- `docker image build -t apache2-demo .`
+
 ## TP
 - write a Dockerfile to create an image with packages php, apache (apache2, libapache2-mod-php)
 - add a index.php file with: <?php phpinfo() ?>
 
 See the [Dockerfile](Dockerfile) as the answer
+
+- `docker image build -t apache2-demo .`
+- `docker container run -d -p 8888:80 apache2-demo`
+- direct access: `http://172.17.0.2/index.php`
+- NAT access: `http://localhost:8888/index.php`
