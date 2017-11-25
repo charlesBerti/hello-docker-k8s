@@ -1,4 +1,4 @@
-# hello Docker & Kubernetes
+# hello Docker & K8S
 
 ## Docker
 ### Installation
@@ -25,6 +25,10 @@
 ### Compose
 - [Docker Compose](docker/compose/README.md)
 
-## Kubernetes
+## K8S
+
+- [K8S](k8s/README.md)
+
+
 
 
