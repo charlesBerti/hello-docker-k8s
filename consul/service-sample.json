@@ -1,0 +1,9 @@
+{
+  "Datacenter": "dc1",
+  "Node": "amazon",
+  "Address": "www.amazon.com",
+  "Service": {
+    "Service": "shop",
+    "Port": 80
+  }
+}

@@ -30,5 +30,6 @@
 - [K8S](k8s/README.md)
 
 
-
+## Consul
+- [Consul](consul/README.md)
 
