@@ -8,6 +8,7 @@
 - client: kubectl
 - server: the K8S version installed on the master
 - Kubelet: the K8S version installed on the node
+- namespace: isolated space (isolated network) for a set Dockers  
 
 ### Deployment & Pod
 Deployment is the implementation of an application.
