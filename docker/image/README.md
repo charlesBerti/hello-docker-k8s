@@ -11,7 +11,7 @@
 ## create/commit/ push
 - create an image from an existing container: `docker container commit -m "comment" -a "author" Container_ID Image_Name:TAG`
 - push to a remote registry
-  - login: `docker login hub.docker.com –u xxx –p yyy`
+  - login: `docker login hub.docker.com --username=wukongsun`
   - push (when creating an image, we should specify its login): `docker image push wukongsun/xenial:net`
 
 ## TP
