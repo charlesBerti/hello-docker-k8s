@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+hostname $1
+
 apt update
 apt install -y docker.io
 apt update && apt install -y apt-transport-https
