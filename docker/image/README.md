@@ -6,12 +6,12 @@
 - inspect: `docker image inspect ubuntu:xenail`
 - pull: `docker image pull ubuntu:xenial`
 - rm: `docker image rm Image_ID`
-- change tag: `docker image tag image:old_tag image:new_tag`
+- change tag: `docker image tag old_image:old_tag new_image:new_tag`
 
 ## create/commit/ push
 - create an image from an existing container: `docker container commit -m "comment" -a "author" Container_ID Image_Name:TAG`
 - push to a remote registry
-  - login: `docker login hub.docker.com --username=wukongsun`
+  - login: `docker login`
   - push (when creating an image, we should specify its login): `docker image push wukongsun/xenial:net`
 
 ## TP

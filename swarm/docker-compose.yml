@@ -1,0 +1,19 @@
+version: "3"
+services:
+  web:
+    image: wukongsun/tmp:v1
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8890:80"
+    networks:
+      - webnet
+networks:
+  webnet:
+

@@ -1,4 +1,5 @@
 # Dockerfile
+Dockerfile defines what goes on in the environment inside your container.
 
 ## Terminology
 - `FROM`: use which base image
