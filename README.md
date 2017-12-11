@@ -31,17 +31,14 @@
 ### Compose
 - [Docker Compose](docker/compose/README.md)
 
-### TP: Python Web Application
-- [Python Web Application](docker/tp_pythonweb/README.md)
-
-
 ## Swarm
+- [Swarm Orchestrator](swarm/README.md)
 
+## TP: Python Web Application
+- [Python Web Application](tp_pythonweb/README.md)
 
 ## K8S
-
-- [K8S](k8s/README.md)
-
+- [K8S Orchestrator](k8s/README.md)
 
 ## Consul
 - [Consul](consul/README.md)

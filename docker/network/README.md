@@ -1,9 +1,16 @@
 # Network
 
+## Drivers
+- bridge: 
+- host: 
+
 ## Basic Manipulation
 - list: `docker network list`
+- inspect: `docker network inspect bridge`
 - create: `docker network create Network_ID`
 - attach a container to a network: `docker container run --name vm1 -ti --net=Network_ID ubuntu:xenial`
+- connect: `docker network connect Network_ID Container_ID`, one container can be connected to multiple docker networks 
+- disconnect: `docker network disconnect Network_ID Container_ID`
 
 ## port exposition
 - NAT port of container to a random port of host: `docker container run -d -P training/webapp python app.py`
