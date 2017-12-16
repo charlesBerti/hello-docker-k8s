@@ -1,16 +1,19 @@
+import sys
+import requests
 import base64
 import json
-import requests
+
 
 CONSUL_HOST = "127.0.0.1"
 CONSUL_PORT = "8500"
 
-DATABASE = "database"
-SLAVE = "slave"
-MESSENGER = "messenger"
-KEYSTONE = "keystone"
-DOCKER = "docker"
-COMPONENTS = "components"
+data1 = '888888888888888888888'
+
+data2 = {
+    "aaa": "bbb",
+    "ccc": "ddd",
+    "eee": "fff"
+}
 
 
 def get_configuration(key):
@@ -28,17 +31,11 @@ def get_configuration(key):
 
 
 def create_configuration(key):
-    data = {
-        "aaa": "bbb",
-        "ccc": "ddd",
-        "eee": "fff"
-    }
     req = requests.put(
         "http://{}:{}/v1/kv/{}".format(CONSUL_HOST, CONSUL_PORT, key),
         headers={"content-type": "application/json"},
-        json=data
+        json=data1
     )
 
-create_configuration("www")
-print(get_configuration("www"))
-
+create_configuration(sys.argv[1])
+print(get_configuration(sys.argv[1])[sys.argv[1]])
