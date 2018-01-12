@@ -3,10 +3,14 @@ Kubernetes coordinates a highly available cluster of computers that are connecte
 
 ## Cluster & Master & Node & Namespace 
 - cluster: 1 master + n nodes
-- master: a VM or a physical PC which coordinates the cluster. Each master installs a *K8S server*. 
-- node: a VM or a physical PC which serves as a worker that runs applications. Each node has: 
-  - a *Kubelet* which is an agent for managing the node and communicating with the master
-  - a container runtime like *Docker engine*
+- master: a VM or a physical PC which coordinates the cluster. Each master installs:
+  - *kube-apiserver*:
+  - *kube-controller-manager*: 
+  - *kube-scheduler*: 
+- node: a VM or a physical PC which serves as a worker that runs applications. Each node installs: 
+  - *Kubelet*: an agent for managing the node and communicating with the master
+  - *kube-proxy*: a network proxy to reflect K8S networking services on each node
+  - *Docker engine*: a container runtime like 
 - master/node: while deploying applications on K8S, the master schedules the containers to run on the nodes. 
 The nodes communicate with the master using the K8S API.
 - client: *kubectl* is the CLI.
