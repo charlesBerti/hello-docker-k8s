@@ -7,7 +7,7 @@
 ## Basic Manipulation
 - list: `docker network list`
 - inspect: `docker network inspect bridge`
-- create: `docker network create Network_ID`
+- create: `docker network create Network_NAME`
 - attach a container to a network: `docker container run --name vm1 -ti --net=Network_ID ubuntu:xenial`
 - connect: `docker network connect Network_ID Container_ID`, one container can be connected to multiple docker networks 
 - disconnect: `docker network disconnect Network_ID Container_ID`
