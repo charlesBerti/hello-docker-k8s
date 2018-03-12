@@ -3,7 +3,7 @@
 ## basic manipulation
 - list: `docker image ls` 
 - search: `docker search ubuntu:xenial`
-- inspect: `docker image inspect ubuntu:xenail`
+- inspect: `docker image inspect ubuntu:xenial`
 - pull: `docker image pull ubuntu:xenial`
 - rm: `docker image rm Image_ID`
 - change tag: `docker image tag old_image:old_tag new_image:new_tag`
