@@ -18,11 +18,21 @@ Test: `docker run hello-world`
 ## No-Root Configuration
 - `sudo groupadd docker`
 - `sudo usermod -aG docker $USER`
+- logout and then login to take effect
 
 ## docker-compose Installation
 ```bash
 sudo apt-get install python-pip
 sudo pip install docker-compose
+```
+## Chinese docker hub mirrors
+```bash
+sudo vi /etc/docker/daemon.json
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
+systemctl daemon-reload
+systemctl restart docker
 ```
 
 ## Bug
