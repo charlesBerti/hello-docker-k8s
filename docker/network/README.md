@@ -20,11 +20,11 @@
 ### Inter-VM Communication
 - `docker network create test_net`
 - `docker container run --name vm1 -ti -d --net=test_net ubuntu:xenial`
-- `docker container run --name vm2 -ti --net=test_net ubuntu:xenial`
+- `docker container run --name vm2 -ti --net=test_net ubuntu:xenial /bin/bash`
 - in the container `vm2`: 
     - `apt update`
     - `apt install iputils-ping`
-    - `ping vm2`
+    - `ping vm1`
 
 ### Web Server
 - `docker container run -ti --rm -p 8888:80 ubuntu:xenial`
@@ -32,5 +32,7 @@
     - `apt update`
     - `apt install apache2 vim`
     - `vim /var/www/html/index.html`
+- find your container IP:
     - `apache2ctl -D FOREGROUND`
+- access the web page from host OS at IP:80 
 
