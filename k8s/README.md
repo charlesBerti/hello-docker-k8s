@@ -23,7 +23,7 @@ a VM or a physical PC which serves as a worker that runs applications, each node
 - *Docker engine*: a container runtime like
 
 ### CMD
-- `kubeclt cluster-info`
+- `kubectl cluster-info`
 - `kubectl get nodes -o yaml`: -o output format
 - `kubectl describe node minikube`: detail about a node
 
