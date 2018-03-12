@@ -33,6 +33,6 @@ Dockerfile defines what goes on in the environment inside your container.
 See the [Dockerfile](Dockerfile) as the answer
 
 - `docker image build -t apache2-demo .`
-- `docker container run -d -p 8888:80 apache2-demo`
+- `docker container run -d -p 8885:80 apache2-demo`
 - direct access: `http://172.17.0.2/index.php`
-- NAT access: `http://localhost:8888/index.php`
+- NAT access: `http://localhost:8885/index.php`

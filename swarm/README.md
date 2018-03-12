@@ -31,3 +31,6 @@ sudo cp /tmp/docker-machine /usr/local/bin/docker-machine```
 - `curl -4 http://192.168.99.100:8890`
 - `docker stack rm getstartedlab`: cleanup
 - `eval $(docker-machine env -u)`: unset ENV
+
+## TP: Python Web Application Deployment
+- [Python Web Application Deployment](tp_pythonweb/README.md)

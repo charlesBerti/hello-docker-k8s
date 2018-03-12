@@ -1,5 +1,5 @@
 # WordPress Deployment
-In order to deploy a wordpress application, we should: 
+In order to deploy a *wordpress* application, we should:
 - create 1 network
 - create 2 volumes
   - 1 for wordpress
@@ -21,7 +21,7 @@ In order to deploy a wordpress application, we should:
 - `docker image pull wordpress`
 - `docker image inspect wordpress:latest`: this shows the parameters to fill while launching a container
 
-To get more info about these images, take a look at dockerhub.com
+To get more info about these images, take a look at *dockerhub.com*
 
 ## MySql Image
 - `docker image pull mysql`
