@@ -34,4 +34,6 @@ apt update
 apt install net-tools
 ```
 - from another terminal launch: `docker container ps`, where you can find container_ID
-- finally, `docker container commit -m "xenial with net-tools" -a "wukong" Container_ID xenial:net`
+- `docker container commit -m "xenial with net-tools" -a "wukong" Container_ID wukongsun/xenial:net`
+- `docker login`
+- `docker image push wukongsun/xenial:net`
