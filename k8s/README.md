@@ -18,7 +18,7 @@ a VM or a physical PC which coordinates the cluster, each master installs:
 
 ### node/worker
 a VM or a physical PC which serves as a worker that runs applications, each node installs:
-- *Kubelet*: an agent for managing the node and communicating with the master
+- *kubelet*: an agent for managing the node and communicating with the master
 - *kube-proxy*: load balancer, a network proxy to reflect K8S networking services on each node, a proxy forwards external communications into the private pod network
 - *Docker engine*: a container runtime like
 
@@ -32,9 +32,9 @@ a VM or a physical PC which serves as a worker that runs applications, each node
 - test: `curl http://localhost:8001/version`
 
 ### log
-- logs: `kubectl logs $POD_NAME`
+- logs: `kubectl logs $POD_ID`
 
-## namespace
+## Namespace
 virtual cluster backed by the same physical cluster, it is a isolated space (isolated network) for a set of Dockers.
 
 ### CMD
@@ -42,24 +42,35 @@ virtual cluster backed by the same physical cluster, it is a isolated space (iso
 - `kubectl --namespace=NAMESPACE_ID get pods`: execute CMD within 1 namespace
 
 ## Pod
-Atomic unit in k8s, it encapsulates 1 or N application container, storage resources, a unique IP address, *it always runs on 1 node*, [example](pod.yml).
+Atomic unit in k8s, *it always runs on 1 node*, [example](pod.yml).
 - computing: 1 or N containers, but the number of containers within 1 pod is fixed
-- storage: all containers in 1 pod have the same mount point, can access the same shared volumes
+- storage: all containers in 1 pod have the same mount point, can access the same shared volume
 - networking: all the containers in 1 pod use a unique IP address, communicate with one another using `localhost`
+- scalability: increase or decrease the number of pods
 
 ### CMD
 - `kubectl get pods`: list pods
 - `kubectl describe pods`: describe pods
+- `kubeclt create -f $POD_ID.yml`: create pod
+- `kubectl delete -f $POD_ID.yml` or `kubectl delete pod $POD_ID`: delete pod
 - `kubectl exec $POD_ID CMD -c $CONTAINTER_ID`: run a cmd the container of the pod
-  - `kubectl exec $POD_ID env`: specify environment variables
+  - `kubectl exec $POD_ID env`: list environment variables in the pod
   - `kubectl exec -ti $POD_ID bash`: launch a `bash`
   - `kubectl exec -ti $POD_ID curl localhost:8080`: internal access
 
-## Replica Set
-controls a group of replicated pods for scalability
+
+## ReplicaSet
+ReplicaSet ensures a fixed number of running pods through selector which is the next generation of ReplicaController.
+*It is recommended to be replaced by Deployment.*
+
+### CMD
+- `kubectl create -t $REPLICASET_ID`: create replicaset
+- `kubectl get replicasets`: list replicasets
+- `kubectl delete replicasets $REPLICASET_ID`: delete replicaset
 
 ## Deployment
-manage N pods through a ReplicaSet, describes and manages a desired state, [example](deployment.yml)
+Deployment changes the actual state to the desired state at a controlled rate.
+It manages N pods through a ReplicaSet, [example](deployment.yml).
 - docker image update
   - rolling update: create a new deploy to increase and decrease the old one
 - scaling: change the number of pod replicas in a deployment.
@@ -70,30 +81,34 @@ manage N pods through a ReplicaSet, describes and manages a desired state, [exam
 
 ### CMD
 - `kubectl get deployments`: list deployments
-- `kubectl run test1 --image=docker.io/jocatalin/kubernetes-bootcamp:v1 --port=8080`: create a deployment
-- `kubectl create -f https://raw.githubusercontent.com/kubernetes/website/master/docs/concepts/workloads/controllers/nginx-deployment.yaml`: create a deployment
-- `kubectl scale deployments/kubernetes-bootcamp --replicas=4`: scale
+- `kubectl create -f deployment.yml`: create a deployment
+- `kubectl rollout status deployment/$DEPLOYMENT_ID`: set rollout status
+- `kubectl edit deployment/$DEPLOYMENT_ID`: edit deployment
+- `kubectl set image deployment/$DEPLOYMENT_ID nginx=nginx:1.9.1`: update image
+- `kubectl scale deployments/$DEPLOYMENT_ID --replicas=4`: scale out
 
 ## Service
 access N pods through an integrated load-balancer, a service routes traffic across a set of Pods, it has that distributes network traffics to all pods of an exposed Deployment.
-The service exposure types include:
+
+### Endpoint
+1 pod for 1 deployment is an endpoint, each pod has an internal IP address
+
+### Service vs. Deployment
+No dependency between service and deployment,
+a service can use pods from different deployment with the same *selector*.
+
+### Exposure Types
 - NodePort: exposes Service on the same port of each selected Node using NAT, it makes the Service accessible from outside the cluster using <NodeIP>:<NodePort>
 - ClusterIP (default): exposes Service on an internal IP in the cluster, this makes the Service only reachable from within the cluster.
 - headless: exposes Service by a Pod network instead of Cluster network, conf `ClusterIP=None`
 - LoadBalancer: creates an external load balancer in the current cloud (if supported) and assigns a fixed, external IP to the Service. Superset of NodePort.
 - ExternalName: exposes the Service using an arbitrary name (specified by externalName in the spec) by returning a CNAME record with the name. No proxy is used. This type requires v1.7 or higher of kube-dns
 
-#### endpoint
-1 pod for 1 deployment is an endpoint, each pod has an internal IP address
-
-#### service vs. deployment
-no dependency between service and deployment, a service can use pods from different deployment with the same `selector`
-
-Service CMD
+### CMD
 - `kubectl get services`: list services
-- list a service: `kubectl get services/$SERVICE_NAME`
+- `kubectl get services/$SERVICE_ID`: list a service
 - `kubectl describe services`: describe services
-- `kubectl describe services $SERVICE_NAME`: describe a service
+- `kubectl describe services $SERVICE_ID`: describe a service
 - `kubectl expose deployment $DEP_ID --type="NodePort" --port 8080`: create a service (expose a deployment)
   - `curl $(minikube ip):$NODE_PORT`: test
 - `kubectl delete service -l run=kubernetes-bootcamp`: delete a service
