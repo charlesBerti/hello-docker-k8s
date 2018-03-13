@@ -13,7 +13,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt-get update
 sudo apt-get install docker-ce
 ```
-Test: `docker run hello-world`
+Test: `sudo docker run hello-world`
 
 ## No-Root Configuration
 - `sudo groupadd docker`
