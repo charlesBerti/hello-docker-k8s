@@ -51,7 +51,7 @@ Atomic unit in k8s, *it always runs on 1 node*, [example](pod.yml).
 ### CMD
 - `kubectl get pods`: list pods
 - `kubectl describe pods`: describe pods
-- `kubeclt create -f $POD_ID.yml`: create pod
+- `kubectl create -f $POD_ID.yml`: create pod
 - `kubectl delete -f $POD_ID.yml` or `kubectl delete pod $POD_ID`: delete pod
 - `kubectl exec $POD_ID CMD -c $CONTAINTER_ID`: run a cmd the container of the pod
   - `kubectl exec $POD_ID env`: list environment variables in the pod
