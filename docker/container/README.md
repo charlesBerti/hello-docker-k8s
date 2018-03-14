@@ -4,22 +4,21 @@
 - `docker container ps -a`
 
 ## run
-- name: `docker container run --name test ubuntu:xenial`
-- interactive mode (executing in bg and attached): `docker container run -ti ubuntu:xenial`
-- detached mode (executing in bg but not attached): `docker container run -ti -d ubuntu:xenial`
+- `docker container run --name test ubuntu:xenial`: name of the container
+- `docker container run -ti ubuntu:xenial`: interactive mode (executing in bg and attached):
+- `docker container run -ti -d ubuntu:xenial`: detached mode (executing in bg but not attached)
 
 ## exec
-run a new process inside a running container: 
-- `docker container exec –ti Container_ID /bin/bash`
+- `docker container exec –ti Container_ID /bin/bash`: run a cmd in a container
 
 ## stop/kill/start
-- stop (send SIGTERM + SIGKILL): `docker container stop Container_ID`
-- start (relaunch): `docker container start Container_ID`
-- kill (send SIGKILL): `docker container kill Container_ID`
+- `docker container start Container_ID`: start/ relaunch
+- `docker container stop Container_ID`: stop (send SIGTERM + SIGKILL)
+- `docker container kill Container_ID`: kill (send SIGKILL)
 
 ## rm
-- remove a stopped docker: `docker container rm Container_ID`
-- --rm remove after execution: `docker container run --rm -ti ubuntu:xenial`
+- `docker container rm Container_ID`: remove a *stopped* docker
+- `docker container run --rm -ti ubuntu:xenial`: remove after the execution
 
 ## TP
 - `docker container run hello-world`
