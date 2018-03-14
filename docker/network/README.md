@@ -4,17 +4,17 @@
 - bridge: 
 - host: 
 
-## Basic Manipulation
-- list: `docker network list`
-- inspect: `docker network inspect bridge`
-- create: `docker network create Network_NAME`
-- attach a container to a network: `docker container run --name vm1 -ti --net=Network_ID ubuntu:xenial`
-- connect: `docker network connect Network_ID Container_ID`, one container can be connected to multiple docker networks 
-- disconnect: `docker network disconnect Network_ID Container_ID`
+## Manipulation
+- `docker network list`: list
+- `docker network inspect bridge`: inspect
+- `docker network create NET_ID`: create
+- `docker container run --name vm1 -ti --rm --net=NET_ID ubuntu:xenial`: launch a container in a network
+- `docker network connect NET_ID Container_ID`: connect a container to a network, one container can be connected to multiple networks
+- `docker network disconnect NET_ID Container_ID`: disconnect
 
-## port exposition
-- NAT port of container to a random port of host: `docker container run -d -P training/webapp python app.py`
-- NAT port of container to port of host: `docker container run -d -p 8888:5000 training/webapp python app.py`
+## Port Exposition
+- `docker container run -d -P training/webapp python app.py`: NAT port of the container to a random port of the host
+- `docker container run -d -p 8888:5000 training/webapp python app.py`: NAT port of the container to port of the host
 
 ## TP
 ### Inter-VM Communication
@@ -32,7 +32,6 @@
     - `apt update`
     - `apt install apache2 vim`
     - `vim /var/www/html/index.html`
-- find your container IP:
-    - `apache2ctl -D FOREGROUND`
+- `apache2ctl -D FOREGROUND`: find your container IP
 - access the web page from host OS at IP:80 
 

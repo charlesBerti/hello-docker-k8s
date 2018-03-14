@@ -28,5 +28,5 @@ To get more info about these images, take a look at *dockerhub.com*
 - `docker image inspect mysql:latest`, this shows the parameters to fill while launching a container
 
 ## Launch Containers
-- `docker container run -it --rm --net web -v mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw --name mysql -d mysql:latest`
-- `docker container run -it --net web --rm -v wordpress:/var/www/html -e WORDPRESS_DB_PASSWORD=my-secret-pw -p 8090:80 --name wordpress -d wordpress:latest`
+- `docker container run --name mysql -ti -d --rm --net web -v mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw  mysql:latest`
+- `docker container run --name wordpress -ti -d --rm --net web -p 8090:80 -v wordpress:/var/www/html -e WORDPRESS_DB_PASSWORD=my-secret-pw wordpress:latest`
