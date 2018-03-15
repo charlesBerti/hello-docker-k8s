@@ -1,6 +1,6 @@
 var http = require('http');
 var vm1_port = 8888
-var vm2_ip = '192.168.56.102'
+var vm2_ip = 'vm2'
 var vm2_port = 8889
 
 // Request options
