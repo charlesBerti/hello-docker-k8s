@@ -13,8 +13,8 @@ Dockerfile specifies all the configurations to build an image.
 - `COPY/ADD`: copy files from the host to the container
   - `COPY ./index.html /var/www/html/index.html`
 - `ENTRYPOINT/CMD`: 
-  - `Entrypoint`: launch the commands during the creation of the container
-  - `CMD`: launch the only command during the execution of the container
+  - `Entrypoint`: alway runing even if we add another cmd in `docker container run ...`
+  - `CMD`: it will be replaced by the cmd in `docker container run ...`
 - `WORKDIR`: switch path
 - `USER`: execute the commands with which user
 - `VOLUME`: mount a volume to the container
