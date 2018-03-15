@@ -22,107 +22,24 @@ a VM or a physical PC which serves as a worker that runs applications, each node
 - *kube-proxy*: load balancer, a network proxy to reflect K8S networking services on each node, a proxy forwards external communications into the private pod network
 - *Docker engine*: a container runtime like
 
-### CMD
+CMD
 - `kubectl cluster-info`
 - `kubectl get nodes -o yaml`: -o output format
 - `kubectl describe node minikube`: detail about a node
+- `kubectl logs $RESOURCE_ID`: logs
+- `kubectl proxy`: create a proxy, all request to `localhost:8001` will be requested to *api-server*
+  - test: `curl http://localhost:8001/version`
 
-### proxy
-- create a proxy: `kubectl proxy`: all request to `localhost:8001` will be requested to *api-server*
-- test: `curl http://localhost:8001/version`
 
-### log
-- logs: `kubectl logs $POD_ID`
-
-## Namespace
+## Concepts
+### Namespace
 virtual cluster backed by the same physical cluster, it is a isolated space (isolated network) for a set of Dockers.
-
-### CMD
 - `kubectl get namespaces`: list namespaces
 - `kubectl --namespace=NAMESPACE_ID get pods`: execute CMD within 1 namespace
-
-## Pod
-Atomic unit in k8s, *it always runs on 1 node*, [example](pod.yml).
-- computing: 1 or N containers, but the number of containers within 1 pod is fixed
-- storage: all containers in 1 pod have the same mount point, can access the same shared volume
-- networking: all the containers in 1 pod use a unique IP address, communicate with one another using `localhost`
-- scalability: increase or decrease the number of pods
-
-### CMD
-- `kubectl get pods`: list pods
-- `kubectl describe pods`: describe pods
-- `kubectl create -f $POD_ID.yml`: create pod
-- `kubectl delete -f $POD_ID.yml` or `kubectl delete pod $POD_ID`: delete pod
-- `kubectl exec $POD_ID CMD -c $CONTAINTER_ID`: run a cmd the container of the pod
-  - `kubectl exec $POD_ID env`: list environment variables in the pod
-  - `kubectl exec -ti $POD_ID bash`: launch a `bash`
-  - `kubectl exec -ti $POD_ID curl localhost:8080`: internal access
-
-
-## ReplicaSet
-ReplicaSet ensures a fixed number of running pods through selector which is the next generation of ReplicaController.
-*It is recommended to be replaced by Deployment.*
-
-### CMD
-- `kubectl create -t $REPLICASET_ID`: create replicaset
-- `kubectl get replicasets`: list replicasets
-- `kubectl delete replicasets $REPLICASET_ID`: delete replicaset
-
-## Deployment
-Deployment changes the actual state to the desired state at a controlled rate.
-It manages N pods through a ReplicaSet, [example](deployment.yml).
-- docker image update
-  - rolling update: create a new deploy to increase and decrease the old one
-- scaling: change the number of pod replicas in a deployment.
-- patterns:
-  - sidecar
-  - ambassador
-  - adapter
-
-### CMD
-- `kubectl get deployments`: list deployments
-- `kubectl create -f deployment.yml`: create a deployment
-- `kubectl rollout status deployment/$DEPLOYMENT_ID`: set rollout status
-- `kubectl edit deployment/$DEPLOYMENT_ID`: edit deployment
-- `kubectl set image deployment/$DEPLOYMENT_ID nginx=nginx:1.9.1`: update image
-- `kubectl scale deployments/$DEPLOYMENT_ID --replicas=4`: scale out
-
-## Service
-access N pods through an integrated load-balancer, a service routes traffic across a set of Pods, it has that distributes network traffics to all pods of an exposed Deployment.
-
-### Endpoint
-1 pod for 1 deployment is an endpoint, each pod has an internal IP address
-
-### Service vs. Deployment
-No dependency between service and deployment,
-a service can use pods from different deployment with the same *selector*.
-
-### Exposure Types
-- NodePort: exposes Service on the same port of each selected Node using NAT, it makes the Service accessible from outside the cluster using <NodeIP>:<NodePort>
-- ClusterIP (default): exposes Service on an internal IP in the cluster, this makes the Service only reachable from within the cluster.
-- headless: exposes Service by a Pod network instead of Cluster network, conf `ClusterIP=None`
-- LoadBalancer: creates an external load balancer in the current cloud (if supported) and assigns a fixed, external IP to the Service. Superset of NodePort.
-- ExternalName: exposes the Service using an arbitrary name (specified by externalName in the spec) by returning a CNAME record with the name. No proxy is used. This type requires v1.7 or higher of kube-dns
-
-### CMD
-- `kubectl get services`: list services
-- `kubectl get services/$SERVICE_ID`: list a service
-- `kubectl describe services`: describe services
-- `kubectl describe services $SERVICE_ID`: describe a service
-- `kubectl expose deployment $DEP_ID --type="NodePort" --port 8080`: create a service (expose a deployment)
-  - `curl $(minikube ip):$NODE_PORT`: test
-- `kubectl delete service -l run=kubernetes-bootcamp`: delete a service
-
-## K8S Objects
-### Basic Conception
-- node IP and external port: the public IP address and port of the node
-- cluster IP and internal port: IP address for all the container within 1 pod, the port can be accessed inside the node
-- container port: the service port in the container
 
 ### Label
 we can attach labels to a resource
 
-Label CMD
 - `kubectl get pods --show-labels`: show labels
 - `kubectl get pods -l run=kubernetes-bootcamp`: select with label `run=kubernetes-bootcamp`
 - `kubectl get services -l run=kubernetes-bootcamp`: select with label `run=kubernetes-bootcamp`
@@ -132,96 +49,19 @@ Label CMD
 supplementary configuration, which will only be used by external applications
 
 
-## Volume
-- PersistentVolume
-There are 3 types of PV
+## Volume & ConfigSet & Secret
+- [Volume & ConfigSet & Secret](volume/README.md)
 
-### PersistentVolumeClaim
-PVC is used to create a PV which will be later declared and used in a pod.
-- `kubectl apply -f mysql-pvc.yml`: create a PVC
 
-### emptyDir
-```
-volumes:
-  - name: cache-volume
-    emptyDir: {}
-```
+## Networking
+- node IP and external port: the public IP address and port of the node
+- cluster IP and internal port: IP address for all the container within 1 pod, the port can be accessed inside the node
+- container port: the service port in the container
 
-### hostPath
-```
-volumes:
-  - name: test-volume
-    hostPath:
-      path: /data   # directory location on host
-```
 
-### ConfigMap
-- `mkdir mysql`
-- `echo "[mysqld]" > mysql/my.cnf`
-- `echo "[client]" > mysql/client.cnf`
-- `kubectl create configmap mysql --from-file=mysql`
-- `kubectl get configmap mysql`
-- `kubectl describe cm mysql`
+## YAML Configuration
+- [YAML Configuration](yaml/README.md)
 
-### Secret
-
-## YAML
-- `kubectl apply -f $FILE_ID.yaml`: create a resource through YAML file
-- `kubectl delete -f $FILE_ID.yaml`: delete a resource through YAML file
-- `apiVersion`: k8s API version
-- `kind`: resource type
-- `meta-data`: pre-defined meta-data
-  - `name`
-  - `lables`
-  - `annotations`
-- `spec`: parameters for different resource type
-### deployment
-  - `deployment spec`
-    - `replicas`
-    - `template`: parameters for the sub-resource type, e.g. the sub-resource of deployment is pod
-
-### pod
-  - `pod spec`
-    - container:
-    - nodeSelector: to choose node to launch pods
-
-### container
-- `container`:
-  - `name`:
-  - `image`
-  - `ports`
-    - `containerPort`
-
-### service
-- type: ClusterIP
-- selector: e.g. `app:n`
-- ports:
-  - port: internal port
-  - target port: container port inside the container
-
-## TP Wordpress
-- create 1 mysql deployment
-  - `kubectl apply -f mysql-deployment.yml`
-- create 1 mysql service
-  - `kubectl apply -f mysql-service.yml`
-- create 1 wordpress deployment
-  - `kubectl apply -f wordpress-deployment.yml`
-- create 1 wordpress service
-  - `kubectl apply -f wordpress-service.yml`
-- create 1 ingress LB
-  - `minikube addons enable ingress`: install ingress
-  - `echo "$(minikube ip) ingress.minikube" | sudo tee -a /etc/hosts`: add host name to /etc/hosts
-  - `kubectl apply -f wordpress-ingress.yml`: create ingress
-- create 2 persistent volumes
-  - `/var/lib/mysql` for MySQL deployment
-    - `kubectl apply -f mysql-pvc.yml`: create `mysql-pvc`
-    - `kubectl apply -f mysql-deployment2.yml`
-    - `kubectl apply -f mysql-service.yml`
-  - `/var/www/html` for Wordpress deployment
-    - `kubectl apply -f wordpress-pvc.yml`: create `wordpress-pvc`
-    - `kubectl apply -f wordpress-deployment2.yml`
-    - `kubectl apply -f wordpress-service.yml`
--
 
 
 
